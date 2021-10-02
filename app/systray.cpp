@@ -9,6 +9,7 @@
 #include "systray.h"
 #include "def.h"
 #include "theme.h"
+#include "notifier.h"
 #include <QMessageBox>
 #include <QApplication>
 
@@ -837,15 +838,12 @@ void SysTray::showMessage(const QString &title,
                           const QString &msg,
                           bool critical)
 {
-    if (tray->isVisible() && showNotifications) {
-        if (critical) {
-            tray->showMessage(title, msg,
-                              QSystemTrayIcon::Critical,
-                              900000);
-        } else {
-            tray->showMessage(title, msg);
-        }
-    }
+  if (tray->isVisible() && showNotifications) {
+    Notifier().notify(title,
+		      msg,
+		      critical,
+		      5000);
+  }
 }
 
 // reload settings if conf changed
